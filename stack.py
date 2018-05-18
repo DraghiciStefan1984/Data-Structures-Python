@@ -5,7 +5,7 @@ Created on Fri May 18 12:38:14 2018
 @author: Stefan Draghici
 """
 
-# the Stack is a data structure that stores the elemnts using FIFO (first in first out)
+""" the Stack is a data structure that stores the elemnts using FIFO (first in first out)"""
 class Stack(object):
     def __init__(self):
         # we will use the python list as a basic structure for our stack
