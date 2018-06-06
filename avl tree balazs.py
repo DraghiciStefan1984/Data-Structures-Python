@@ -30,7 +30,7 @@ class AVL(object):
         return node.height
     
     """
-        Check if the tree is balanced. 
+        Check if the tree is balanced at given the node. 
         If the result > 1 => left heavy tree => right rotation.
         If the result < -1 => right heavy tree => left rotation.
     """
@@ -84,16 +84,54 @@ class AVL(object):
             node.right_child=self.insert_node(data, node.right_child)
         node.height=max(self.calculate_height(node.left_child), self.calculate_height(node.right_child))+1
         return self.settle_violations(data, node)
-
-
-
-
-
-
-
-
-
-
+    
+    """Settle the violations of the AVL tree rules."""
+    def settle_violations(self, data, node):
+        # check if the tree is balanced at the given node
+        balance=self.calculate_balance(node)
+        # case 1: left left heavy 
+        if balance>1 and data<node.left_child.data:
+            print("left left heavy")
+            return self.rotate_right(node)
+        # case 2: right right heavy 
+        if balance<-1 and data>node.right_child.data:
+            print("right righr heavy")
+            return self.rotate_left(node)
+        # case 3: left heavy 
+        if balance>1 and data>node.left_child.data:
+            print("left right heavy")
+            node.left_child=self.rotate_left(node.left_child)
+            return self.right_child(node)
+        # case 4: right left heavy 
+        if balance<-1 and data>node.right_child.data:
+            print("right left heavy")
+            node.right_child=self.rotate_right(node.right_child)
+            return self.rotate_left(node)
+        return node
+        
+    """Traverse the entire AVL tree starting at a given node."""
+    def traverse(self):
+        if self.root:
+            self.traverse_in_order(self.root)
+    
+    def traverse_in_order(self, node):
+        if node.left_child:
+            self.traverse_in_order(node.left_child)
+        print(node.data)
+        if node.right_child:
+            self.traverse_in_order(node.right_child)
+            
+    
+        
+# test
+avl=AVL()
+avl.insert(8)
+avl.insert(9)
+avl.insert(7)
+avl.insert(10)
+avl.insert(18)
+avl.insert(19)
+print(avl.traverse())
 
 
 
